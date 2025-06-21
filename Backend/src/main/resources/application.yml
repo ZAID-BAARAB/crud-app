@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/hahn
+    username: postgres
+    password: Novel222
+    driver-class-name: org.postgresql.Driver
+  #    hikari:
+  #      auto-commit: false
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
+cloudinary:        # i used Cloudinary to host product images on cloud and store only URL in Database
+  cloud_name: dsgnuek6y
+  api_key: 194754251381395
+  api_secret: IjBiLpzVcsT32bgCp-GBQjrZA-I
+
+
