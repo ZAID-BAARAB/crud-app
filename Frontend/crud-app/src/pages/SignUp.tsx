@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import { motion } from "framer-motion";
 import skyPayLogo from "../assets/images/skypayme_logo.jpg";
+import Footer from '../components/Footer';
 
 
 const SignUp: React.FC = () => {
@@ -157,6 +158,9 @@ const SignUp: React.FC = () => {
             />
           </div>
         </div>
+      </div>
+      <div >
+        <Footer/>
       </div>
     </motion.div>
   );

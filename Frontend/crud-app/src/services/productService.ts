@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { selectAccessToken } from "../redux/slices/authSlice";
 import { store } from "../redux/store";
@@ -60,6 +61,7 @@ export const ProductService = {
       );
 
       return response.data;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const apiError: ApiError = {
         message: "Failed to fetch products",
@@ -112,6 +114,7 @@ export const ProductService = {
       );
 
       return response.data;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(`Failed to fetch product ${productId}:`, error);
       throw {
@@ -123,38 +126,7 @@ export const ProductService = {
     }
   },
 
-  /**
-   * Gets products by category
-   * @param categoryId - The category ID to filter by
-   */
-
-//   async getProductsByCategory(categoryId: number): Promise<Product[]> {
-//     try {
-//       const accessToken = store.getState().auth.accessToken;
-//       const headers = accessToken
-//         ? { Authorization: `Bearer ${accessToken}` }
-//         : {};
-
-//       const response = await axios.get<Product[]>(
-//         `${SERVER_IP}/api/v1/products/public/category/${categoryId}`,
-//         { headers }
-//       );
-
-//       return response.data;
-//     } catch (error: any) {
-//       console.error(
-//         `Failed to fetch products for category ${categoryId}:`,
-//         error
-//       );
-//       throw {
-//         message:
-//           error.response?.data?.message ||
-//           `Failed to fetch products for category ${categoryId}`,
-//         status: error.response?.status,
-//       };
-//     }
-//   },
-
+  
 // <===== Filter   Product By Name =====>
 
 
@@ -180,6 +152,7 @@ export const ProductService = {
       );
 
       return response.data;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const apiError: ApiError = {
         message: "Failed to filter products",
@@ -293,6 +266,7 @@ export const ProductService = {
           },
         }
       );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error("Failed to delete product:", error);
       throw {

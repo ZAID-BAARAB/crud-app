@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import skyPayLogo from "../assets/images/skypayme_logo.jpg";
 import { authenticateUser } from '../services/authService';
+import Footer from '../components/Footer';
 
 
 const Login: React.FC = () => {
@@ -128,10 +129,6 @@ const Login: React.FC = () => {
                 <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5 mr-2" />
                 Sign in with Google
               </button>
-              <button className="w-full flex items-center justify-center border border-gray-600 py-2 rounded-md hover:bg-gray-700">
-                <img src="https://www.svgrepo.com/show/475699/apple-color.svg" alt="Apple" className="w-5 h-5 mr-2" />
-                Sign in with Apple
-              </button>
             </div>
           </div>
           {/* Illustration */}
@@ -144,6 +141,9 @@ const Login: React.FC = () => {
           </div>
         </div>
       </div>
+          <div >
+          <Footer/>
+        </div>
     </motion.div>
   );
 };

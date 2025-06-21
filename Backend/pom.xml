@@ -9,7 +9,7 @@
 		<relativePath/>
 	</parent>
 	<groupId>com.hahnSoftware</groupId>
-	<artifactId>security</artifactId>
+	<artifactId>crud-App</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>security</name>
 	<description>This project is  for Hahn Software </description>

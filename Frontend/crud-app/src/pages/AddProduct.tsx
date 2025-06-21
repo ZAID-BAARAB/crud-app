@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { ProductService } from "../services/productService";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { ProductService } from "../services/productService";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const AddProduct: React.FC = () => {
   const navigate = useNavigate();
@@ -127,6 +128,9 @@ const AddProduct: React.FC = () => {
             </button>
           </form>
         </div>
+      </div>
+      <div >
+        <Footer/>
       </div>
     </motion.div>
   );
