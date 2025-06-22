@@ -10,12 +10,14 @@ import Loader from "../components/UI/Loader";
 import { ProductService } from "../services/productService";
 import type { Product } from "../services/productService";
 
+
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [searchValue, setSearchValue] = useState<string>("");
+
 
   // Fetch products on mount and when searchValue changes
   useEffect(() => {
@@ -97,4 +99,8 @@ const Home: React.FC = () => {
 
 export default Home;
 
+
+// function useSelector(arg0: (state: RootState) => any) {
+//   throw new Error("Function not implemented.");
+// }
 

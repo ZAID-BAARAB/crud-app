@@ -1,24 +1,35 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import hahnLogo from "../assets/images/hahnLogo.png";
+import { logout } from "../services/authService";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  // Get isAuthenticated from localStorage
+  const isAuthenticated = !!localStorage.getItem('accessToken') && !!localStorage.getItem('refreshToken');
+  // Get currentUser from localStorage
+  const currentUser = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')!) : null;
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img
-            src="https://flowbite.com/docs/images/logo.svg"
-            className="h-8"
-            alt="Flowbite Logo"
-          />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            Flowbite
-          </span>
-        </Link>
-
+        <div className="flex items-center space-x-3 rtl:space-x-reverse">
+          <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+            <img
+              src={hahnLogo}
+              className="h-8"
+              alt="Flowbite Logo"
+            />
+            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+              Hahn Software
+            </span>
+          </Link>
+          {currentUser && (
+            <span className="ml-4 text-green-300 font-semibold text-lg drop-shadow-sm dark:text-green-200">
+              Welcome {currentUser.firstname}
+            </span>
+          )}
+        </div>
         <button
           onClick={() => setIsOpen(!isOpen)}
           type="button"
@@ -41,11 +52,8 @@ const Navbar: React.FC = () => {
             />
           </svg>
         </button>
-
         <div
-          className={`${
-            isOpen ? "flex" : "hidden"
-          } items-center justify-between w-full md:flex md:w-auto md:order-1`}
+          className={`$${isOpen ? "flex" : "hidden"} items-center justify-between w-full md:flex md:w-auto md:order-1`}
           id="navbar-language"
         >
           <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
@@ -65,14 +73,25 @@ const Navbar: React.FC = () => {
                 About
               </Link>
             </li>
-            <li>
-              <Link
-                to="/login"
-                className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700"
-              >
-                Login
-              </Link>
-            </li>
+            {!isAuthenticated ? (
+              <li>
+                <Link
+                  to="/login"
+                  className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700"
+                >
+                  Login
+                </Link>
+              </li>
+            ) : (
+              <li>
+                <button
+                  onClick={logout}
+                  className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700"
+                >
+                  Logout
+                </button>
+              </li>
+            )}
             <li>
               <Link
                 to="/pricing"

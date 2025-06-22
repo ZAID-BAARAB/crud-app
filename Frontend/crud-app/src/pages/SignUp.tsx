@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import { motion } from "framer-motion";
 import skyPayLogo from "../assets/images/skypayme_logo.jpg";
 import Footer from '../components/Footer';
+import { registerUser } from '../services/authService';
 
 
 const SignUp: React.FC = () => {
@@ -35,11 +37,21 @@ const SignUp: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      console.log('Form submitted:', form);
-      // submit logic here
+      try {
+        await registerUser(
+          form.firstName,
+          form.lastName,
+          form.email,
+          form.password,
+          'USER'
+        );
+        // Optionally, show a success message or redirect
+      } catch (err: any) {
+        setErrors({ ...errors, submit: err.message || 'Registration failed' });
+      }
     }
   };
 
@@ -131,6 +143,8 @@ const SignUp: React.FC = () => {
               </button>
             </form>
 
+            {errors.submit && <p className="text-red-400 text-sm mt-4 text-center">{errors.submit}</p>}
+
             <div className="my-6 flex items-center justify-center text-gray-400">
               <span className="border-t border-gray-600 w-1/5"></span>
               <span className="px-3 text-sm">or</span>
@@ -141,10 +155,6 @@ const SignUp: React.FC = () => {
               <button className="w-full flex items-center justify-center border border-gray-600 py-2 rounded-md hover:bg-gray-700">
                 <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5 mr-2" />
                 Sign up with Google
-              </button>
-              <button className="w-full flex items-center justify-center border border-gray-600 py-2 rounded-md hover:bg-gray-700">
-                <img src="https://www.svgrepo.com/show/475699/apple-color.svg" alt="Apple" className="w-5 h-5 mr-2" />
-                Sign up with Apple
               </button>
             </div>
           </div>

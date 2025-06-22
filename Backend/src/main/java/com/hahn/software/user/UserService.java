@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,13 +42,28 @@ public class UserService {
     }
 
 
+//    public User getCurrentUser() {
+//        UserDetails userDetails = (UserDetails) SecurityContextHolder
+//                .getContext()
+//                .getAuthentication()
+//                .getPrincipal();
+//        String username = userDetails.getUsername();
+//        return userRepository.findByEmail(username)
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//    }
 
     public User getCurrentUser() {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = userDetails.getUsername();
-        return userRepository.findByEmail(username)
+        // Grab the Authentication from the security context
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        // auth.getName() is whatever you set as the JWT subject (your email)
+        String email = auth.getName();
+        System.out.println("email"+ email);
+
+        return userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
+
 
     //update profile
 //    public CustomResponse updateProfile(UserRequest request) {

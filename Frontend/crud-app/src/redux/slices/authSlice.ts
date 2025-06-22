@@ -51,6 +51,7 @@ const authSlice = createSlice({
       // Persist tokens
       localStorage.setItem('accessToken', action.payload.accessToken);
       localStorage.setItem('refreshToken', action.payload.refreshToken);
+      
     },
     setCurrentUser: (state, action: PayloadAction<User>) => {
       state.currentUser = action.payload;
@@ -79,6 +80,7 @@ export const selectAccessToken = (state: RootState) => state.auth.accessToken;
 export const selectRefreshToken = (state: RootState) => state.auth.refreshToken;
 export const selectCurrentUserEmail = (state: RootState) => state.auth.currentUserEmail;
 export const selectCurrentUser = (state: RootState) => state.auth.currentUser;
+export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
 
 // Export reducer
 export default authSlice.reducer;

@@ -19,6 +19,13 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 786828051327-6e0lp3f0rfl1d5r2tqbl2k2t3auhlg6c.apps.googleusercontent.com
+            client-secret: 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
 
 application:
   security:
@@ -27,12 +34,6 @@ application:
       expiration: 86400000 # a day
       refresh-token:
         expiration: 604800000 # 7 days
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: google-client-id
-            client-secret: google-client-secret
 cloudinary:        # i used Cloudinary to host product images on cloud and store only URL in Database
   cloud_name: dsgnuek6y
   api_key: 194754251381395

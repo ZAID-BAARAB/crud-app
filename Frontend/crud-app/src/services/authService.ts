@@ -23,15 +23,13 @@ export const authenticateUser = async (
   );
 
   if (response.status === 200) {
-    const { access_token, refresh_token, user } = response.data;
+    const { access_token, refresh_token } = response.data;
     // Dispatch tokens
     store.dispatch(
       setAuthTokens({ accessToken: access_token, refreshToken: refresh_token, email })
     );
-    // Optionally set current user if returned
-    if (user) {
-      store.dispatch(setCurrentUser(user as User));    
-    }
+    // setting  current user based on his JWT Token
+    await whoAmI(access_token);
 
     return { accessToken: access_token, refreshToken: refresh_token };
   }
@@ -49,31 +47,43 @@ export const registerUser = async (
   password: string,
   role: string = 'USER'
 ): Promise<{ accessToken: string; refreshToken: string }> => {
-  const response = await axios.post(
-    `${SERVER_IP}/api/v1/auth/register`,
-    { firstname, lastname, email, password, role },
-    { headers: { 'Content-Type': 'application/json' } }
-  );
-
-  if (response.status === 200) {
-    const { access_token, refresh_token, user } = response.data;
-    store.dispatch(
-      setAuthTokens({ accessToken: access_token, refreshToken: refresh_token, email })
+  try {
+    const response = await axios.post(
+      `${SERVER_IP}/api/v1/auth/register`,
+      { firstname, lastname, email, password, role },
+      { headers: { 'Content-Type': 'application/json' } }
     );
-    if (user) {
-      store.dispatch(setCurrentUser(user as User));
-    }
-    return { accessToken: access_token, refreshToken: refresh_token };
-  }
 
-  throw new Error('Registration failed');
+    if (response.status === 200) {
+      const { access_token, refresh_token } = response.data;
+      store.dispatch(
+        setAuthTokens({ accessToken: access_token, refreshToken: refresh_token, email })
+      );
+      // Fetch and set current user after registration
+      await whoAmI(access_token);
+
+       window.location.href = '/';
+
+      return { accessToken: access_token, refreshToken: refresh_token };
+      
+    }
+
+    throw new Error('Registration failed');
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      // Try to extract backend error message
+      const backendMsg = error.response.data?.message || error.response.data?.error || JSON.stringify(error.response.data);
+      throw new Error(backendMsg || 'Registration failed');
+    }
+    throw new Error('Registration failed');
+  }
 };
 
 /**
  * Fetch current user profile and update Redux store
  */
-export const whoAmI = async (): Promise<User> => {
-  const accessToken = store.getState().auth.accessToken;
+export const whoAmI = async (accessToken: string): Promise<User> => {
+  // const accessToken = store.getState().auth.accessToken;
   if (!accessToken) throw new Error('No access token found. Please log in.');
 
   const response = await axios.get<User>(
@@ -107,6 +117,8 @@ export const logout = async (): Promise<void> => {
     }
   }
   store.dispatch(logoutAction());
+  // Redirect to login page after logout
+  window.location.href = '/login';
 };
 
 /**
@@ -132,3 +144,28 @@ export const refreshAccessToken = async (): Promise<{ accessToken: string; refre
   store.dispatch(logoutAction());
   throw new Error('Token refresh failed');
 };
+
+//<======= Oauth2 Google Login =======>//
+export const googleLogin = async (idToken: string): Promise<void> => {
+  console.log('Google ID Token:', idToken);
+  const response = await axios.post(`${SERVER_IP}/api/v1/auth/google`, {
+    idToken
+  });
+
+  if (response.status === 200) {
+    const { access_token, refresh_token } = response.data;
+
+    store.dispatch(
+      setAuthTokens({
+        accessToken: access_token,
+        refreshToken: refresh_token,
+      })
+    );
+    console.log('Access Token:', access_token);
+    await whoAmI(access_token);
+
+  } else {
+    throw new Error('Google login failed');
+  }
+};
+

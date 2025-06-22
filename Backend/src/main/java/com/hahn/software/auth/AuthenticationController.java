@@ -40,5 +40,13 @@ public class AuthenticationController {
     authenticationService.refreshToken(request, response);
   }
 
+  // <========  Google login ============>
+  @PostMapping("/google")
+  public ResponseEntity<AuthenticationResponse> googleLogin(
+          @RequestBody GoogleRequest request
+  ) {
+    return ResponseEntity.ok(authenticationService.googleLogin(request));
+  }
+
 
 }

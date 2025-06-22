@@ -3,8 +3,9 @@ import Navbar from '../components/Navbar';
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import skyPayLogo from "../assets/images/skypayme_logo.jpg";
-import { authenticateUser } from '../services/authService';
+import { authenticateUser, googleLogin } from '../services/authService';
 import Footer from '../components/Footer';
+import { GoogleLogin } from '@react-oauth/google';
 
 
 const Login: React.FC = () => {
@@ -124,12 +125,35 @@ const Login: React.FC = () => {
               <span className="px-3 text-sm">or</span>
               <span className="border-t border-gray-600 w-1/5"></span>
             </div>
+                        {/* ✅ NEW: Google Login Button */}
             <div className="space-y-3">
-              <button className="w-full flex items-center justify-center border border-gray-600 py-2 rounded-md hover:bg-gray-700">
+              <GoogleLogin
+                onSuccess={async (credentialResponse) => {
+                  const idToken = credentialResponse.credential;
+                  if (idToken) {
+                    try {
+                      await googleLogin(idToken); // ✅ NEW: Call authService to handle Google login
+                      navigate('/');
+                    } catch (err) {
+                      console.error('Google login failed:', err);
+                      setError('Google login failed');
+                    }
+                  }
+                }}
+                onError={() => {
+                  console.log('Google Login Failed');
+                  setError('Google login failed');
+                }}
+              />
+            </div>
+            {/* <div className="space-y-3">
+              <button className="w-full flex items-center justify-center border border-gray-600 py-2 rounded-md hover:bg-gray-700"
+                 onClick={loginWithGoogle}
+              >
                 <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5 mr-2" />
                 Sign in with Google
               </button>
-            </div>
+            </div> */}
           </div>
           {/* Illustration */}
           <div className="hidden md:flex items-center justify-center">

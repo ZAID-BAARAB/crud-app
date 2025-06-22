@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -18,12 +19,43 @@ const AddProduct: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
+  const [inputErrors, setInputErrors] = useState<{ [key: string]: string }>({});
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith("image/")) {
+      setPhotoFile(file);
+      if (file.size > 1024 * 1024) {
+        setInputErrors(prev => ({ ...prev, photo: "Image size should not exceed 1MB" }));
+      } else {
+        setInputErrors(prev => {
+          const rest = { ...prev };
+          delete rest.photo;
+          return rest;
+        });
+      }
+    }
+  };
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault();
+  const handleClick = () => fileInputRef.current?.click();
+
+  const validateInputs = () => {
+    const errors: { [key: string]: string } = {};
+    if (!name.trim()) errors.name = "Name cannot be empty";
+    if (Number(price) < 0) errors.price = "Price cannot be less than 0";
+    if (Number(stockQuantity) < 0) errors.stock = "Stock quantity cannot be less than 0";
+    if (photoFile && photoFile.size > 1024 * 1024) errors.photo = "Image size should not exceed 1MB";
+    setInputErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    if (!validateInputs()) return;
     setLoading(true);
-
     try {
       const formData = new FormData();
       formData.append("productRequest", new Blob([JSON.stringify({
@@ -32,15 +64,12 @@ const AddProduct: React.FC = () => {
         description,
         stockQuantity: Number(stockQuantity)
       })], { type: "application/json" }));
-
       if (photoFile) {
         formData.append("productPhotoFile", photoFile);
       }
-
       await ProductService.createProduct(formData);
       setSuccess(true);
       navigate("/"); // Or redirect to product list
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message || "Failed to add product");
     } finally {
@@ -73,6 +102,9 @@ const AddProduct: React.FC = () => {
                 onChange={(e) => setName(e.target.value)}
                 required
               />
+              {inputErrors.name && (
+                <p className="text-red-400 text-xs mt-1">{inputErrors.name}</p>
+              )}
             </div>
 
             <div>
@@ -84,6 +116,9 @@ const AddProduct: React.FC = () => {
                 onChange={(e) => setPrice(e.target.value)}
                 required
               />
+              {inputErrors.price && (
+                <p className="text-red-400 text-xs mt-1">{inputErrors.price}</p>
+              )}
             </div>
 
             <div>
@@ -95,6 +130,9 @@ const AddProduct: React.FC = () => {
                 onChange={(e) => setStockQuantity(e.target.value)}
                 required
               />
+              {inputErrors.stock && (
+                <p className="text-red-400 text-xs mt-1">{inputErrors.stock}</p>
+              )}
             </div>
 
             <div>
@@ -109,12 +147,43 @@ const AddProduct: React.FC = () => {
 
             <div>
               <label className="block mb-1">Product Image</label>
-              <input
-                type="file"
-                accept="image/*"
-                className="w-full bg-gray-700 text-white p-2 rounded"
-                onChange={(e) => setPhotoFile(e.target.files?.[0] || null)}
-              />
+              <div
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+                onClick={handleClick}
+                className="w-full p-6 border-2 border-dashed border-gray-400 rounded bg-gray-700 text-center cursor-pointer hover:border-blue-500 transition"
+              >
+                {photoFile ? (
+                  <>
+                    <p className="text-green-400">{photoFile.name}</p>
+                    <img src={URL.createObjectURL(photoFile)} alt="Preview" className="mt-2 max-h-32 mx-auto rounded" />
+                  </>
+                ) : (
+                  <p className="text-gray-400">Drag and drop a new image here, or click to select</p>
+                )}
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={fileInputRef}
+                  className="hidden"
+                  onChange={e => {
+                    const file = e.target.files?.[0] || null;
+                    setPhotoFile(file);
+                    if (file && file.size > 1024 * 1024) {
+                      setInputErrors(prev => ({ ...prev, photo: "Image size should not exceed 1MB" }));
+                    } else {
+                      setInputErrors(prev => {
+                        const rest = { ...prev };
+                        delete rest.photo;
+                        return rest;
+                      });
+                    }
+                  }}
+                />
+              </div>
+              {inputErrors.photo && (
+                <p className="text-red-400 text-xs mt-1">{inputErrors.photo}</p>
+              )}
             </div>
 
             <button

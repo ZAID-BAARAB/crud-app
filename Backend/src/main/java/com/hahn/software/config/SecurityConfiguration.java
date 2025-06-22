@@ -65,8 +65,8 @@ public class SecurityConfiguration {
                                 .requestMatchers("/ws/**").permitAll()  // Autorisation explicite
                                 .requestMatchers("/topic/**").permitAll()
                                 .requestMatchers("/app/**").permitAll()
-                                .requestMatchers("/api/v1/users/whoami") // Permit access to the whoami endpoint
-                                .permitAll()
+//                                .requestMatchers("/api/v1/users/whoami")
+//                                .permitAll()
                                 .requestMatchers("/api/v1/products/public/getProductById/**") // Permit all for this endpoint
                                 .permitAll()
                                 .requestMatchers("/api/v1/products/public/**") // Permit all for this endpoint
@@ -90,7 +90,6 @@ public class SecurityConfiguration {
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
                 )
         ;
-
         return http.build();
     }
 

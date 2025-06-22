@@ -16,12 +16,13 @@ const StyledWrapper = styled.div`
   .button {
     position: relative;
     width: 150px;
-    height: 40px;
+    height: 50px;
     cursor: pointer;
     display: flex;
     align-items: center;
     border: 1px solid #34974d;
     background-color: #3aa856;
+    border-radius: 20px;
   }
 
   .button, .button__icon, .button__text {
@@ -43,6 +44,8 @@ const StyledWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 20px;
+
   }
 
   .button .svg {

@@ -30,8 +30,8 @@ public class UserController {
 
     @GetMapping("/whoami")
     public UserResponse whoAmI() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
+        User user = userService.getCurrentUser();
+        System.out.println("uiser  s email "+ user.getEmail());
         return new UserResponse(
                 user.getFirstname(),
                 user.getLastname(),
