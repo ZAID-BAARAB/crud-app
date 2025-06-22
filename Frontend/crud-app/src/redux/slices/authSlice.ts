@@ -42,7 +42,7 @@ const authSlice = createSlice({
     ) => {
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
-      state.isAuthenticated = true;    
+      state.isAuthenticated = true;
       // Optionally store user email
       if (action.payload.email) {
         state.currentUserEmail = action.payload.email;
@@ -51,7 +51,8 @@ const authSlice = createSlice({
       // Persist tokens
       localStorage.setItem('accessToken', action.payload.accessToken);
       localStorage.setItem('refreshToken', action.payload.refreshToken);
-      
+      // Persist isAuthenticated
+      localStorage.setItem('isAuthenticated', 'true');
     },
     setCurrentUser: (state, action: PayloadAction<User>) => {
       state.currentUser = action.payload;
@@ -68,6 +69,7 @@ const authSlice = createSlice({
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('currentUserEmail');
       localStorage.removeItem('currentUser');
+      localStorage.setItem('isAuthenticated', 'false');
     },
   },
 });

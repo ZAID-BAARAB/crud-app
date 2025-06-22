@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import AddProduct from './pages/AddProduct';
+import ProtectedRoute from './components/ProtectedRoute';
 
 
 function AnimatedRoutes() {
@@ -15,8 +16,12 @@ function AnimatedRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />
-        <Route path="/addProduct" element={<AddProduct />} />
-
+        {/* <Route path="/addProduct" element={<AddProduct />} /> */}
+        {/* Protected routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/addProduct" element={<AddProduct />} />
+          {/* Add more protected routes here */}
+        </Route>
       </Routes>
     </AnimatePresence>
   );

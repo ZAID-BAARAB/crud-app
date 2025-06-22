@@ -94,10 +94,10 @@ const AddProduct: React.FC = () => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block mb-1">Product Name</label>
+              <label className="block mb-0">Product Name</label>
               <input
                 type="text"
-                className="w-full bg-gray-700 text-white p-2 rounded"
+                className="w-full bg-gray-700 text-white p-1 rounded"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -108,10 +108,10 @@ const AddProduct: React.FC = () => {
             </div>
 
             <div>
-              <label className="block mb-1">Price</label>
+              <label className="block mb-0">Price</label>
               <input
                 type="number"
-                className="w-full bg-gray-700 text-white p-2 rounded"
+                className="w-full bg-gray-700 text-white p-1 rounded"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 required
@@ -122,10 +122,10 @@ const AddProduct: React.FC = () => {
             </div>
 
             <div>
-              <label className="block mb-1">Stock Quantity</label>
+              <label className="block mb-0">Stock Quantity</label>
               <input
                 type="number"
-                className="w-full bg-gray-700 text-white p-2 rounded"
+                className="w-full bg-gray-700 text-white p-1 rounded"
                 value={stockQuantity}
                 onChange={(e) => setStockQuantity(e.target.value)}
                 required
@@ -141,7 +141,7 @@ const AddProduct: React.FC = () => {
                 className="w-full bg-gray-700 text-white p-2 rounded"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                rows={4}
+                rows={3}
               ></textarea>
             </div>
 

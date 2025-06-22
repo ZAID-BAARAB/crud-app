@@ -1,26 +1,36 @@
 // src/components/ProtectedRoute.tsx
-import React from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, useLocation } from 'react-router-dom';
-import type { RootState } from '../redux/store';
-import { selectCurrentUser } from '../redux/slices/authSlice';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { selectIsAuthenticated } from '../redux/slices/authSlice';
 
-interface ProtectedRouteProps {
-  children: React.ReactNode;
-}
-
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const currentUser = useSelector((state: RootState) => selectCurrentUser(state));
+const ProtectedRoute = () => {
+  const isAuthenticated = useSelector(selectIsAuthenticated);
   const location = useLocation();
 
-  // If there's no logged-in user, send them to /login,
-  // but remember where they were trying to go:
-  if (!currentUser) {
-    return <Navigate to="/login" replace state={{ from: location }} />;
+  if (!isAuthenticated) {
+    // Pass the intended path via state
+    return <Navigate to="/login" state={{ from: location.pathname, message: "You have to login first to Create products" }} replace />;
   }
 
-  // Otherwise render the protected page
-  return <>{children}</>;
+  return <Outlet />;
 };
 
 export default ProtectedRoute;
+
+
+// import { useSelector } from 'react-redux';
+// import { Navigate, Outlet } from 'react-router-dom';
+// import { selectIsAuthenticated } from '../redux/slices/authSlice';
+// import { useEffect } from 'react';
+
+// const ProtectedRoute = () => {
+//   const isAuthenticated = useSelector(selectIsAuthenticated);
+//   useEffect(() => {
+//     console.log('ProtectedRoute - isAuthenticated:', isAuthenticated);
+//     console.log('ProtectedRoute - current path:', location.pathname);
+//   }, [isAuthenticated, location]);
+
+//   return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
+// };
+
+// export default ProtectedRoute;
