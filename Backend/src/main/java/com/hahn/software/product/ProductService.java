@@ -7,17 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +17,6 @@ import java.util.Map;
 public class ProductService {
     private final ProductRepository productRepository;
 //    private final UserRepository userRepository;
-//    private final CategoryRepository categoryRepository;
     private final ProductMapper productMapper;
     private final Cloudinary cloudinary;
 
@@ -64,27 +55,10 @@ public class ProductService {
             String secureUrl = uploadResult.get("secure_url").toString();
             product.setPhotoUrl(secureUrl);
         }
-
-
-
-
-
         // Save the product to the database
         Product savedProduct = productRepository.save(product);
 
         ProductResponse productResponse = productMapper.toProductResponse(savedProduct);
-
-        // Encode the photo to Base64 and set it in the response
-
-//        if (savedProduct.getProductPhoto() != null) {
-//            try (InputStream in = new URL(productPhotoPath).openStream()) {
-//                byte[] photoBytes = in.readAllBytes();
-//                String photoBase64 = Base64.getEncoder().encodeToString(photoBytes);
-//                productResponse.setPhotoBase64(photoBase64);
-//            } catch (IOException e) {
-//                System.out.println("Error !,could not transform photo file from Cloudinary  to Base64");
-//            }
-//        }
         return productResponse;
 
     }
@@ -95,12 +69,6 @@ public class ProductService {
         // Check if the product exists
         Product existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + id));
-
-//        // Check if the category exists
-//        Category category = categoryRepository.findById(productRequest.getCategoryId())
-//                .orElseThrow(() -> new IllegalArgumentException("Category not found with ID: " + productRequest.getCategoryId()));
-//        existingProduct.setCategory(category);
-
 
         existingProduct.setName(productRequest.getName());
         existingProduct.setPrice(productRequest.getPrice());
@@ -139,15 +107,6 @@ public class ProductService {
         return productResponse;
     }
 
-//    private void deleteOldPhotoIfExists(Product existingProduct) throws CustomResponse {
-//        if (existingProduct.getProductPhoto() != null) {
-//            try {
-//                Files.deleteIfExists(Paths.get(existingProduct.getProductPhoto()));
-//            } catch (CustomResponse | IOException customResponse) {
-//                throw new CustomResponse("Failed to delete old photo: ", HttpStatus.INTERNAL_SERVER_ERROR);
-//            }
-//        }
-//    }
 
     //<===== Pagable part Find all ==========?
     public Page<ProductResponse> getAllProducts(int page, int size) {
