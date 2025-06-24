@@ -110,7 +110,7 @@ docker-compose up --build
 - Runs backend with `application-docker.yml`
 
 ---
-### API Documentation
+3. **API Documentation**
 Swagger UI is integrated for interactive API documentation. Access it at:
 http://localhost:8080/swagger-ui.html
 
