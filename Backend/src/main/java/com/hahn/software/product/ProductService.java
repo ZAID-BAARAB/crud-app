@@ -108,35 +108,35 @@ public class ProductService {
     }
 
 
-    //<===== Pagable part Find all ==========?
+    //<===== Pagable Product Find all ==========?
     public Page<ProductResponse> getAllProducts(int page, int size) {
         // Create a Pageable object for pagination
         Pageable pageable = PageRequest.of(page, size);
 
-        // Fetch paginated parts from the repository
+        // Fetch paginated Products from the repository
         Page<Product> productsPage = productRepository.findAll(pageable);
 
-        // Map each Part entity to PartResponse
+        // Map each Product entity to ProducttResponse
         return productsPage.map(productMapper::toProductResponse);
     }
 
 
-    //<==== filter Parts by Name =========>
+    //<==== filter Products by Name =========>
     public Page<ProductResponse> filterProductsByName(String name, int page, int size) throws IOException {
         // Create a Pageable object for pagination
         Pageable pageable = PageRequest.of(page, size);
 
-        // Fetch filtered parts from the repository
+        // Fetch filtered Products from the repository
         Page<Product> filteredProducts;
         if (name != null && !name.isEmpty()) {
             // Filter by name only
             filteredProducts = productRepository.findByNameContainingIgnoreCase(name, pageable);
         } else {
-            // No filters applied, return all parts
+            // No filters applied, return all Products
             filteredProducts = productRepository.findAll(pageable);
         }
 
-        // Map each Part entity to PartResponse
+        // Map each Product entity to ProductResponse
         return filteredProducts.map(productMapper::toProductResponse);
     }
 
