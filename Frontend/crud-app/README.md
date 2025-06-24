@@ -36,11 +36,13 @@ Access the app at: [http://localhost:5173/](http://localhost:5173/)
 #### ✨ Frontend Features
 - **Tailwind CSS** for modern, responsive styling
 - **Google OAuth2** authentication
-- **Protected Routes** (Add Product requires login; supports role-based access)
+- **Protected Routes** (Add Product requires login; also role-based access )
 - **Redux** for state management
+- **form validation**
 - **Reusable Components** (Buttons, Inputs, etc.)
 - **Separation of Concerns**: API logic in `/services`, UI in `.tsx` components
 - **Unit Testing** with Jest
+- **pagination**
 
 #### 🧪 Running Frontend Unit Tests
 ```bash

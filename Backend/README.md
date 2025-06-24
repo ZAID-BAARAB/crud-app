@@ -77,7 +77,14 @@ mvn test
 ```
 
 ---
+## 🛠️ SQL Script
 
+An SQL script is provided to initialize the database schema along with some sample data (Users and Products) for testing purposes.  
+You can find the file at:
+
+```bash
+crud-app/Backend/src/main/resources/schema.sql
+```
 ## 📄 Contacts
 
 If you have any questions or would like to get in touch, feel free to reach out:
