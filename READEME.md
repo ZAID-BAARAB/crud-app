@@ -17,7 +17,8 @@ git clone https://github.com/ZAID-BAARAB/crud-app.git
 
 ### Navigate to the Frontend Directory
 ```bash
-cd Frontend/crud-app
+cd crud-app/Frontend/crud-app
+
 ```
 
 ### Install Dependencies
