@@ -76,7 +76,7 @@ public class ProductController {
         return productService.getTop10ByOrderByProductId();
     }
 
-    //<===== Filter Parts by Name ==============>
+    //<===== Filter Products by Name ==============>
     @GetMapping("/public/filter-by-name")
     public Page<ProductResponse> filterProducts(
             @RequestParam(required = false) String name,
@@ -87,7 +87,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete-product/{id}")
-//    @PreAuthorize("hasRole('ADMIN')")   this API can be secured only for admin
+//    @PreAuthorize("hasRole('ADMIN')")   this API can be secured only for admin for role based access 
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         try {
             productService.deleteProductById(id);
