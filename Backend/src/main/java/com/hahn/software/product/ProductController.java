@@ -96,7 +96,7 @@ public class ProductController {
             throw new CustomResponse("Error during delete : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/all")
+    @GetMapping("/public/all")
     public ResponseEntity<Page<ProductResponse>> getAllProducts(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
@@ -105,11 +105,4 @@ public class ProductController {
         return ResponseEntity.ok(productsPage);
     }
 
-
-
-//    @GetMapping("/getProductsOutOfStock")
-//    public ResponseEntity<List<ProductResponse>> getProductsOutOfStock() {
-//        List<ProductResponse> outOfStockProducts = productMapper.toProductResponseList(productService.findByStatus(ProductStatus.OUT_OF_STOCK));
-//        return ResponseEntity.ok(outOfStockProducts);
-//    }
 }

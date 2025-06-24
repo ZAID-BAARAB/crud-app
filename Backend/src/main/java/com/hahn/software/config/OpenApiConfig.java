@@ -17,7 +17,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
                         email = "baarabzaid42@gmail.com",
                         url = "https://github.com/ZAID-BAARAB"
                 ),
-                description = "OpenApi documentation of crud-App for Hahn SOftware",
+                description = "OpenApi documentation of crud-App for Hahn Software",
                 title = "OpenApi specification - Zaid BAARAB",
                 version = "1.0",
                 license = @License(
