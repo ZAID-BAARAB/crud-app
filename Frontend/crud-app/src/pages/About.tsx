@@ -28,7 +28,7 @@ const About: React.FC = () => {
               Project Overview
             </h2>
             <p>
-              This application was created as part of a technical assessment for <strong>Hahn Software</strong>.
+              This application was created as part of a technical assessment .
             </p>
             <p>
               The goal was to develop a full-stack CRUD system using <strong>Spring Boot</strong> for the backend and{" "}
@@ -62,7 +62,7 @@ const About: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <p><strong>Name:</strong> Zaid BAARAB</p>
-                <p><strong>Email:</strong> <a className="text-blue-600 underline" href="mailto:zaidbaarab@gmail.com">zaidbaarab@gmail.com</a></p>
+                <p><strong>Email:</strong> <a className="text-blue-600 underline" href="mailto:baarabzaid42@gmail.com">baarabzaid42@gmail.com</a></p>
                 <p><strong>Phone:</strong> +212 6 58 57 20 07</p>
                 <p><strong>Location:</strong> Morocco</p>
                 <p><strong>GitHub:</strong> <a className="text-blue-600 underline" href="https://github.com/ZAID-BAARAB" target="_blank" rel="noopener noreferrer">github.com/ZAID-BAARAB</a></p>

@@ -245,9 +245,9 @@ export const ProductService = {
 
       return response.data;
     } catch (error: any) {
-      console.error("Failed to fetch all products:", error);
+      console.error(":", error);
       throw {
-        message: error.response?.data?.message || "Failed to fetch products",
+        message: error.response?.data?.message || "No Products Yet! Please add some new",
         status: error.response?.status,
       };
     }

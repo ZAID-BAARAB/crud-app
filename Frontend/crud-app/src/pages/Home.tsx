@@ -9,6 +9,7 @@ import ProductItem from "../components/ProductItem";
 import Loader from "../components/UI/Loader";
 import { ProductService } from "../services/productService";
 import type { Product } from "../services/productService";
+import Footer from "../components/Footer";
 
 
 const Home: React.FC = () => {
@@ -127,6 +128,9 @@ const Home: React.FC = () => {
             </button>
           </nav>
         </div>
+        <div className="mt-8">
+          <Footer></Footer>
+        </div>
 
       </div>
     </motion.div>
@@ -136,7 +140,5 @@ const Home: React.FC = () => {
 export default Home;
 
 
-// function useSelector(arg0: (state: RootState) => any) {
-//   throw new Error("Function not implemented.");
-// }
+
 

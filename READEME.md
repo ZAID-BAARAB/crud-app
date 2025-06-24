@@ -79,7 +79,7 @@ npm test
 
 2. **Run the Backend**
 ```bash
-cd backend
+cd crud-app/backend
 # With Maven Wrapper
 ./mvnw spring-boot:run
 # Or with Maven installed

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import { motion } from "framer-motion";
-import skyPayLogo from "../assets/images/skypayme_logo.jpg";
+import hahnLogo from "../assets/images/hahnLogo.png";
 import Footer from '../components/Footer';
 import { googleLogin, registerUser } from '../services/authService';
 import { GoogleLogin } from '@react-oauth/google';
@@ -189,7 +189,7 @@ const SignUp: React.FC = () => {
           {/* Illustration */}
           <div className="hidden md:flex items-center justify-center">
             <img
-                src={skyPayLogo}
+                src={hahnLogo}
               alt="Illustration"
               className="w-3/4"
             />
