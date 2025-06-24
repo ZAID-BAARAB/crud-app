@@ -1,3 +1,3 @@
-export const SERVER_IP = "http://127.0.0.1:8080";
-export  const GOOGLE_CLIENT_ID = '786828051327-6e0lp3f0rfl1d5r2tqbl2k2t3auhlg6c.apps.googleusercontent.com';
-export const GOOGLE_REDIRECT = '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';
+export const SERVER_IP = "http://127.0.0.1:8080"; // in production ths should be the server's IP address or domain name
+export  const GOOGLE_CLIENT_ID = '786828051327-6e0lp3f0rfl1d5r2tqbl2k2t3auhlg6c.apps.googleusercontent.com';  // i hardcoded this here only for development purposes, in production this should be stored in an environment variable
+export const GOOGLE_REDIRECT = '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';  

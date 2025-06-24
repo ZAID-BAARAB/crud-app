@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import hahnLogo from "../assets/images/hahnLogo.png";
 import { logout } from "../services/authService";
+import { ACCESS_TOKEN_KEY, CURRENT_USER_KEY, REFRESH_TOKEN_KEY } from "../constants/storageKeys";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   // Get isAuthenticated from localStorage
-  const isAuthenticated = !!localStorage.getItem('accessToken') && !!localStorage.getItem('refreshToken');
+  const isAuthenticated = !!localStorage.getItem(ACCESS_TOKEN_KEY) && !!localStorage.getItem(REFRESH_TOKEN_KEY);
   // Get currentUser from localStorage
-  const currentUser = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')!) : null;
+  const currentUser = localStorage.getItem(CURRENT_USER_KEY) ? JSON.parse(localStorage.getItem(CURRENT_USER_KEY)!) : null;
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
@@ -18,7 +19,7 @@ const Navbar: React.FC = () => {
             <img
               src={hahnLogo}
               className="h-8"
-              alt="Flowbite Logo"
+              alt="Hahn Software Logo"
             />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               Hahn Software
@@ -86,20 +87,12 @@ const Navbar: React.FC = () => {
               <li>
                 <button
                   onClick={logout}
-                  className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700"
+                  className="mr-5 block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700"
                 >
                   Logout
                 </button>
               </li>
             )}
-            <li>
-              <Link
-                to="/contact"
-                className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700"
-              >
-                Contact
-              </Link>
-            </li>
           </ul>
         </div>
       </div>
