@@ -1,54 +1,56 @@
-# React + TypeScript + Vite
+# Crud App / Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack CRUD application with a React (Vite) frontend and a Spring Boot backend. This project demonstrates many concepts of frontend and backend development, including TWT and OAuth2 authentication, state management, testing, and cloud-based media storage.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Getting Started
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### 1. Clone the Repository
+```bash
+git clone https://github.com/ZAID-BAARAB/crud-app.git
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🖥️ Frontend (React + Vite)
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### Navigate to the Frontend Directory
+```bash
+cd crud-app/Frontend/crud-app
+
 ```
+
+### Install Dependencies
+```bash
+npm install
+```
+
+### Run the Development Server
+```bash
+npm run dev
+```
+
+Access the app at: [http://localhost:5173/](http://localhost:5173/)
+
+#### ✨ Frontend Features
+- **Tailwind CSS** for modern, responsive styling
+- **Google OAuth2** authentication
+- **Protected Routes** (Add Product requires login; supports role-based access)
+- **Redux** for state management
+- **Reusable Components** (Buttons, Inputs, etc.)
+- **Separation of Concerns**: API logic in `/services`, UI in `.tsx` components
+- **Unit Testing** with Jest
+
+#### 🧪 Running Frontend Unit Tests
+```bash
+npm test
+```
+
+---
+## 📄 Contacts
+
+If you have any questions or would like to get in touch, feel free to reach out:
+
+- 📧 **Email**: [baarabzaid42@gmail.com](mailto:baarabzaid42@gmail.com)  
+- 📞 **Phone**: +212 6 58 57 20 07

@@ -124,4 +124,9 @@ mvn test
 
 ---
 
-## 📄 License
+## 📄 Contacts
+
+If you have any questions or would like to get in touch, feel free to reach out:
+
+- 📧 **Email**: [baarabzaid42@gmail.com](mailto:baarabzaid42@gmail.com)  
+- 📞 **Phone**: +212 6 58 57 20 07
