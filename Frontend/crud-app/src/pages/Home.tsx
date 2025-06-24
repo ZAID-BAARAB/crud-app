@@ -17,6 +17,9 @@ const Home: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [searchValue, setSearchValue] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const pageSize = 10;
 
 
   // Fetch products on mount and when searchValue changes
@@ -32,11 +35,16 @@ const Home: React.FC = () => {
           result = await ProductService.filterProductsByName(searchValue, 0, 10);
           if (isMounted) setProducts(result.content);
         } else {
-          const topProducts = await ProductService.getTop10Products();
-          if (isMounted) setProducts(topProducts);
+          // const topProducts = await ProductService.getTop10Products();
+                    // if (isMounted) setProducts(topProducts);
+            result = await ProductService.getAllProducts(currentPage, pageSize);
+            if (isMounted) {
+              setProducts(result.content);
+              setTotalPages(result.totalPages);
+            }
         }
       } catch (err: any) {
-        if (isMounted) setError(err.message || "Failed to fetch products");
+        if (isMounted) setError(err.message || "No Products Yet ! Please add some products.");
       } finally {
         if (isMounted) setLoading(false);
       }
@@ -92,6 +100,34 @@ const Home: React.FC = () => {
         ) : (
           <p className="text-center text-gray-500 mt-4">No products available.</p>
         )}
+        <div className="flex justify-center mt-6">
+          <nav className="inline-flex items-center space-x-2">
+            <button
+              disabled={currentPage === 0}
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
+              className="px-3 py-1 bg-gray-200 hover:bg-gray-300 disabled:opacity-50 rounded"
+            >
+              Prev
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentPage(i)}
+                className={`px-3 py-1 rounded ${currentPage === i ? 'bg-blue-500 text-white' : 'bg-gray-100 hover:bg-gray-200'}`}
+              >
+                {i + 1}
+              </button>
+            ))}
+            <button
+              disabled={currentPage >= totalPages - 1}
+              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))}
+              className="px-3 py-1 bg-gray-200 hover:bg-gray-300 disabled:opacity-50 rounded"
+            >
+              Next
+            </button>
+          </nav>
+        </div>
+
       </div>
     </motion.div>
   );

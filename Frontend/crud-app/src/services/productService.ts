@@ -239,7 +239,7 @@ export const ProductService = {
         : {};
 
       const response = await axios.get<PaginatedProductResponse>(
-        `${SERVER_IP}/api/v1/products/all`,
+        `${SERVER_IP}/api/v1/products/public/all`,
         { headers, params: { page, size } }
       );
 

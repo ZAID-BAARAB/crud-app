@@ -4,7 +4,9 @@ import Navbar from '../components/Navbar';
 import { motion } from "framer-motion";
 import skyPayLogo from "../assets/images/skypayme_logo.jpg";
 import Footer from '../components/Footer';
-import { registerUser } from '../services/authService';
+import { googleLogin, registerUser } from '../services/authService';
+import { GoogleLogin } from '@react-oauth/google';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 const SignUp: React.FC = () => {
@@ -17,6 +19,11 @@ const SignUp: React.FC = () => {
   });
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || '/';
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -25,6 +32,7 @@ const SignUp: React.FC = () => {
 
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
+    
 
     if (!form.firstName.trim()) newErrors.firstName = 'First name is required.';
     if (!form.lastName.trim()) newErrors.lastName = 'Last name is required.';
@@ -40,6 +48,7 @@ const SignUp: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
+      setLoading(true);
       try {
         await registerUser(
           form.firstName,
@@ -51,6 +60,8 @@ const SignUp: React.FC = () => {
         // Optionally, show a success message or redirect
       } catch (err: any) {
         setErrors({ ...errors, submit: err.message || 'Registration failed' });
+      }finally {
+        setLoading(false); // End loading
       }
     }
   };
@@ -134,12 +145,14 @@ const SignUp: React.FC = () => {
                 />
                 {errors.confirmPassword && <p className="text-red-400 text-sm">{errors.confirmPassword}</p>}
               </div>
-
               <button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition"
+                disabled={loading}
+                className={`w-full py-2 px-4 rounded-md transition 
+                  ${loading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}
+                  text-white`}
               >
-                Create account
+                {loading ? 'Creating account…' : 'Create account'}
               </button>
             </form>
 
@@ -152,10 +165,24 @@ const SignUp: React.FC = () => {
             </div>
 
             <div className="space-y-3">
-              <button className="w-full flex items-center justify-center border border-gray-600 py-2 rounded-md hover:bg-gray-700">
-                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5 mr-2" />
-                Sign up with Google
-              </button>
+              <GoogleLogin
+                onSuccess={async (credentialResponse) => {
+                  const idToken = credentialResponse.credential;
+                  if (idToken) {
+                    try {
+                      await googleLogin(idToken); // ✅ NEW: Call authService to handle Google login
+                      navigate(from, { replace: true });
+                    } catch (err) {
+                      console.error('Google login failed:', err);
+                      setError('Google login failed');
+                    }
+                  }
+                }}
+                onError={() => {
+                  console.log('Google Login Failed');
+                  setError('Google login failed');
+                }}
+              />
             </div>
           </div>
 

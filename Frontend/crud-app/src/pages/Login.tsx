@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import skyPayLogo from "../assets/images/skypayme_logo.jpg";
+import hahnLogo from "../assets/images/hahnLogo.png";
 import { authenticateUser, googleLogin } from '../services/authService';
 import Footer from '../components/Footer';
 import { GoogleLogin } from '@react-oauth/google';
@@ -82,7 +82,7 @@ const Login: React.FC = () => {
           <div>
             <h2 className="text-3xl font-bold mb-2">Welcome back</h2>
             <p className="text-gray-400 mb-6">
-              Start your website in seconds. Don’t have an account?{' '}
+              Start your shop in seconds. Don’t have an account?{' '}
               <Link
                 to="/signUp"
                 className="text-blue-400 hover:underline"
@@ -167,9 +167,9 @@ const Login: React.FC = () => {
             </div> */}
           </div>
           {/* Illustration */}
-          <div className="hidden md:flex items-center justify-center">
+          <div className="hidden md:flex items-center justify-center border-radius-lg mt-6">
             <img
-              src={skyPayLogo}
+              src={hahnLogo}
               alt="Illustration"
               className="w-3/4"
             />

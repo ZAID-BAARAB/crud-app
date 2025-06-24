@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// ProductItem.tsx
 import React, { useState } from "react";
 import type { Product } from "../services/productService";
 import { ProductService } from "../services/productService";
 import EditProductModal from "./EditProductModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   product: Product;
@@ -38,11 +39,14 @@ const ProductItem: React.FC<Props> = ({ product, onDelete }) => {
 
   // Determine stock status
   const inStock = product.stockQuantity > 0;
-  const stockColorClass = inStock ? "text-green-500" : "text-red-500";
-  const stockIcon = (
-    <span className={`${stockColorClass} text-xl mr-1`}>
-      {/* Dot icon */}
-      &#9679;
+  const stockBadge = (
+    <span
+      className={`inline-flex items-center gap-1 px-2 py-1 text-xs font-semibold rounded-full
+        ${inStock ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+      title={inStock ? "In Stock" : "Out of Stock"} // Tooltip for accessibility
+    >
+      <FontAwesomeIcon icon={inStock ? faCircleCheck : faCircleXmark} />
+      {inStock ? "In Stock" : "Out of Stock"} ({product.stockQuantity})
     </span>
   );
 
@@ -54,16 +58,20 @@ const ProductItem: React.FC<Props> = ({ product, onDelete }) => {
           alt={product.name}
           className="w-full h-40 object-cover rounded mb-4"
         />
-        <div className="mb-2">
-          <h3 className="text-lg font-semibold inline-block mr-2">{product.name}</h3>
-          <div className="inline-flex items-center">
-            {stockIcon}
-            <span className="text-sm text-gray-600">{product.stockQuantity}</span>
-          </div>
+        <div className="mb-2 space-y-1">
+          <h3 className="text-xl font-bold">{product.name}</h3>
+          <div>{stockBadge}</div>
         </div>
+
+        {/*  Description */}
         <p className="text-gray-500 mb-2">{shortDesc}</p>
-        <p className="text-blue-700 font-bold mb-4">${product.price.toFixed(2)}</p>
-        <div className="flex space-x-2">
+
+        <p className="inline-block bg-blue-100 text-blue-800 font-semibold px-3 py-1 rounded-full text-sm mb-2">
+          ${product.price.toFixed(2)}
+        </p>
+
+        {/*  Action Buttons */}
+        <div className="flex space-x-2 mt-auto border-t pt-4">
           <button
             onClick={handleEdit}
             className="flex-1 text-center bg-yellow-500 text-white px-3 py-2 rounded hover:bg-yellow-600"
@@ -78,6 +86,7 @@ const ProductItem: React.FC<Props> = ({ product, onDelete }) => {
           </button>
         </div>
       </div>
+
       <EditProductModal
         product={product}
         isOpen={showModal}
@@ -92,13 +101,15 @@ export default ProductItem;
 
 
 
+
 // /* eslint-disable @typescript-eslint/no-explicit-any */
 // // ProductItem.tsx
 // import React, { useState } from "react";
-// // import { Link } from "react-router-dom";
 // import type { Product } from "../services/productService";
 // import { ProductService } from "../services/productService";
 // import EditProductModal from "./EditProductModal";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 // interface Props {
 //   product: Product;
@@ -117,18 +128,28 @@ export default ProductItem;
 //     }
 //   };
 
-//   const handleEdit = () => {
-//     setShowModal(true);
-//   };
-
-//   const handleModalClose = () => {
-//     setShowModal(false);
-//   };
-
+//   const handleEdit = () => setShowModal(true);
+//   const handleModalClose = () => setShowModal(false);
 //   const handleEditSuccess = () => {
 //     setShowModal(false);
-//     window.location.reload(); // or trigger a parent update for better UX
+//     window.location.reload();
 //   };
+
+//   // Truncate description to 40 chars
+//   const shortDesc = product.description
+//     ? product.description.length > 40
+//       ? product.description.slice(0, 40) + "..."
+//       : product.description
+//     : "";
+
+//   // Determine stock status
+//   const inStock = product.stockQuantity > 0;
+//   const stockIcon = (
+//     <FontAwesomeIcon
+//       icon={inStock ? faCircleCheck : faCircleXmark}
+//       className={`mr-2 text-lg ${inStock ? "text-green-500" : "text-red-500"}`}
+//     />
+//   );
 
 //   return (
 //     <>
@@ -138,15 +159,14 @@ export default ProductItem;
 //           alt={product.name}
 //           className="w-full h-40 object-cover rounded mb-4"
 //         />
-//         <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
-//         <div>
-//           <div>
-//             <span className="text-sm text-gray-600">
-//               Stock: {product.stockQuantity}
-//             </span>
+//         <div className="mb-2">
+//           <h3 className="text-lg font-semibold inline-block mr-2">{product.name}</h3>
+//           <div className="inline-flex items-center">
+//             {stockIcon}
+//             <span className="text-sm text-gray-600">{product.stockQuantity}</span>
 //           </div>
 //         </div>
-//         <p className="text-gray-500 mb-2">{product.description}</p>
+//         <p className="text-gray-500 mb-2">{shortDesc}</p>
 //         <p className="text-blue-700 font-bold mb-4">${product.price.toFixed(2)}</p>
 //         <div className="flex space-x-2">
 //           <button

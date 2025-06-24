@@ -6,7 +6,8 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import AddProduct from './pages/AddProduct';
 import ProtectedRoute from './components/ProtectedRoute';
-
+import About from './pages/About';
+import './icons/fontawesome';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -16,7 +17,7 @@ function AnimatedRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />
-        {/* <Route path="/addProduct" element={<AddProduct />} /> */}
+        <Route path="/about" element={<About />} />
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>
           <Route path="/addProduct" element={<AddProduct />} />
